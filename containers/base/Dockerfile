@@ -1,4 +1,6 @@
-FROM ubuntu:16.04
+FROM node:10.15.3-jessie-slim
+
+RUN node -v && npm -v
 
 RUN apt-get update && apt-get install -y \
   wget \
