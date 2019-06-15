@@ -4,6 +4,7 @@
   "description": "This repo is the base for the workshop \"Building Systems with Terraform and NodeJS\"",
   "main": "index.js",
   "scripts": {
+    "start:server": "nodemon --exec babel-node server/index.js",
     "start:ui": "cd ui && yarn start"
   },
   "repository": {
@@ -16,7 +17,15 @@
   },
   "homepage": "https://github.com/diogofcunha/aws-workshop#readme",
   "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/node": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "nodemon": "^1.19.1",
     "serverless-http": "^2.0.2",
-    "webpack": "^4.34.0"
+    "webpack": "^4.34.0",
+    "webpack-cli": "^3.3.4"
+  },
+  "dependencies": {
+    "koa": "^2.7.0"
   }
 }
