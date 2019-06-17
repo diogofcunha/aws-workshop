@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { getImages } from "./client";
 import AssetInfoOverlay from "./components/AssetInfoOverlay";
 import AssetGrid from "./components/AssetGrid";
+import DropzoneContainer from "./components/DropContainer";
 
 function App() {
   const [assets, setAssets] = useState(undefined);
@@ -26,21 +27,23 @@ function App() {
         alignItems: "center"
       }}
     >
-      {assets === undefined ? (
-        "Loading"
-      ) : assets && assets.length ? (
-        <div>
-          <AssetGrid assets={assets} setSelectedAsset={setSelectedAsset} />
-          {selectedAsset && (
-            <AssetInfoOverlay
-              id={selectedAsset}
-              onClose={() => setSelectedAsset(undefined)}
-            />
-          )}
-        </div>
-      ) : (
-        "No assets"
-      )}
+      <DropzoneContainer>
+        {assets === undefined ? (
+          "Loading"
+        ) : assets && assets.length ? (
+          <div>
+            <AssetGrid assets={assets} setSelectedAsset={setSelectedAsset} />
+            {selectedAsset && (
+              <AssetInfoOverlay
+                id={selectedAsset}
+                onClose={() => setSelectedAsset(undefined)}
+              />
+            )}
+          </div>
+        ) : (
+          "No assets"
+        )}
+      </DropzoneContainer>
     </div>
   );
 }
