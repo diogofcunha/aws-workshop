@@ -8,7 +8,17 @@ const AssetPreview = ({ asset, onSelect, size }) => {
   }, [asset.id, onSelect]);
 
   return (
-    <div style={{ margin: 10, position: "relative" }}>
+    <div
+      style={{
+        margin: 10,
+        position: "relative",
+        width: size,
+        height: 400,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
       {asset.type === "image" ? (
         // eslint-disable-next-line jsx-a11y/alt-text
         <img src={url} width={size} onClick={onSelectCb} />
