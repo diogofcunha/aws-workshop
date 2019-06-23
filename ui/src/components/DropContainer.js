@@ -72,9 +72,11 @@ export default function DropzoneContainer({ children }) {
           bottom: 0,
           right: 0
         }}
+        onClick={e => e.stopPropagation()}
       >
-        <input {...getInputProps()} />
-        <AddAssetButton onClick={open} />
+        <AddAssetButton onClick={open}>
+          <input {...getInputProps()} />
+        </AddAssetButton>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import PlusIcon from "./PlusIcon";
 
-export default function AddAssetButton({ onClick }) {
+export default function AddAssetButton({ onClick, children }) {
   return (
     <button
       style={{
@@ -12,6 +12,7 @@ export default function AddAssetButton({ onClick }) {
       }}
       onClick={onClick}
     >
+      {children}
       <PlusIcon />
     </button>
   );
