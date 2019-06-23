@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { saveFile } from "../client";
+import AddAssetButton from "./AddAssetButton";
 
 export default function DropzoneContainer({ children }) {
   const [filesToUpload, setFilesToUpload] = useState([]);
@@ -28,10 +29,12 @@ export default function DropzoneContainer({ children }) {
     }
   }, []);
 
-  const { getRootProps, isDragActive } = useDropzone({ onDrop });
+  const { getRootProps, isDragActive, open, getInputProps } = useDropzone({
+    onDrop
+  });
 
   return (
-    <div {...getRootProps()}>
+    <div {...getRootProps()} style={{ width: "100%", height: "100%" }}>
       {filesToUpload.length > 0 && (
         <div>
           Uploading the files {uploadedFiles.length} out of{" "}
@@ -55,7 +58,24 @@ export default function DropzoneContainer({ children }) {
           Drop your files here..
         </div>
       )}
-      <div style={{ opacity: isDragActive ? 0.5 : 1 }}>{children}</div>
+      <div
+        style={{ opacity: isDragActive ? 0.5 : 1 }}
+        onClick={e => e.stopPropagation()}
+      >
+        {children}
+      </div>
+      <div
+        style={{
+          position: "absolute",
+          boxSizing: "border-box",
+          padding: 10,
+          bottom: 0,
+          right: 0
+        }}
+      >
+        <input {...getInputProps()} />
+        <AddAssetButton onClick={open} />
+      </div>
     </div>
   );
 }
