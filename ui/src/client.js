@@ -20,12 +20,13 @@ export const getImages = async () => {
 export const getAssetInfo = async id => {
   if (id === 1) {
     return {
-      takenAt: Date.now(),
-      resolution: "1080x1920",
-      format: "JPEG",
+      addedAt: Date.now(),
+      durationInSeconds: 0,
+      orientation: 1,
       mimeType: "image/jpeg",
-      numberOfPixels: "3.22K",
-      orientation: "Vertical"
+      AssetId: "1",
+      width: 1080,
+      height: 1920
     };
   } else {
     throw new Error("Not found");
