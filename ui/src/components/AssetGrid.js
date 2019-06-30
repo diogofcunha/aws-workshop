@@ -25,7 +25,7 @@ export default function AssetGrid({ assets, setSelectedAsset }) {
   });
 
   return (
-    <div style={{ overflow: "scroll", height: "100%" }}>
+    <div style={{ overflow: "scroll", height: "100vh" }}>
       {rows.map((assets, i) => (
         <div style={{ display: "flex" }} key={i}>
           {assets.map(a => (
