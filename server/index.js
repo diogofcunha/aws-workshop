@@ -1,8 +1,12 @@
 import Koa from "koa";
+import spawnBuffered from "./utils/spawnBuffered";
+
 const app = new Koa();
 
 app.use(async ctx => {
-  ctx.body = "Hello world";
+  const resultBuffer = await spawnBuffered("ffmpeg", ["-version"]);
+
+  ctx.body = resultBuffer.toString();
 });
 
 app.listen(5000);
