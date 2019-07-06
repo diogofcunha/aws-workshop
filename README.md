@@ -18,6 +18,13 @@ cd ui && yarn && cd .. && yarn
 yarn start:ui
 ```
 
+## To run the server inside a docker container (with watch enabled):
+
+```shell
+yarn docker:build
+yarn docker:start
+```
+
 ## To run the server:
 
 ```shell

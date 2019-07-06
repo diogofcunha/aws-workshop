@@ -4,6 +4,8 @@
   "description": "This repo is the base for the workshop \"Building Systems with Terraform and NodeJS\"",
   "main": "index.js",
   "scripts": {
+    "docker:build": "docker-compose build",
+    "docker:start": "docker-compose up",
     "build:lambdas": "webpack --config webpack.config.js",
     "start:server": "nodemon --exec babel-node server/index.js",
     "start:ui": "cd ui && yarn start"
