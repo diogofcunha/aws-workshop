@@ -10,7 +10,7 @@ module.exports = fns.map(f => ({
   entry: ["babel-polyfill", path.join(functionsPath, f, "./index.js")],
   target: "node",
   output: {
-    path: path.join(functionsPath, f, "lib"),
+    path: path.join(functionsPath, f, "dist"),
     filename: "index.js",
     libraryTarget: "commonjs2"
   },
