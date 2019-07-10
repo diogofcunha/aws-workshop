@@ -7,7 +7,7 @@
     "docker:build": "docker-compose build",
     "docker:start": "docker-compose up",
     "build:lambdas": "webpack --config webpack.config.js",
-    "start:server": "nodemon --exec babel-node server/index.js",
+    "start:server": "nodemon -r node_modules/dotenv/config --exec babel-node server/index.js",
     "start:ui": "cd ui && yarn start"
   },
   "repository": {
