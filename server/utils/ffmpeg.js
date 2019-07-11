@@ -8,7 +8,7 @@ const videoFlags = [
   "-preset",
   "superfast",
   "-movflags",
-  "frag_keyframe+empty_moov"
+  "frag_keyframe+empty_moov",
 ];
 
 const imageFlags = ["-f", "image2", "-codec:v", "mjpeg"];
@@ -19,9 +19,9 @@ export const processThumbnail = async (input, isVideo) => {
     input,
     ...(isVideo ? [] : ["-frames:v", "1"]),
     "-q:v",
-    `3`,
+    `8`,
     ...(isVideo ? videoFlags : imageFlags),
-    "-"
+    "-",
   ];
 
   return await spawnBuffered("ffmpeg", ffmpegArgs);
@@ -37,7 +37,7 @@ export const getInfo = async input => {
     "-show_frames",
     "-show_format",
     "-read_intervals",
-    "%+#1"
+    "%+#1",
   ];
 
   const rawData = await spawnBuffered(
@@ -67,6 +67,6 @@ const normalizeInfoData = rawData => {
     durationInSeconds,
     width,
     height,
-    orientation
+    orientation,
   };
 };
