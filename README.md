@@ -6,6 +6,11 @@ This workshop was featured at:
 
 - https://skillsmatter.com/conferences/11213-fullstack-london-2019-the-conference-on-javascript-node-and-internet-of-things#program
 
+## Usefull links:
+- https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
+- https://www.terraform.io/docs/providers/index.html
+- https://www.terraform.io/docs/configuration/resources.html
+
 ## Initial setup:
 
 ```shell
