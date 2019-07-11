@@ -1,3 +1,4 @@
+# You can find a really good resource on configuring api gateway at https://learn.hashicorp.com/terraform/aws/lambda-api-gateway
 # Creating a data reference to the lambda function we are going to associate with 
 data "aws_lambda_function" "api" {
   function_name = "${var.function_name}"
