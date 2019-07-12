@@ -1,9 +1,11 @@
 import Koa from "koa";
+import cors from "@koa/cors";
+
 import spawnBuffered from "./utils/spawnBuffered";
 
 const app = new Koa();
 
-app.use(async ctx => {
+app.use(cors()).use(async ctx => {
   const resultBuffer = await spawnBuffered("ffmpeg", ["-version"]);
 
   ctx.body = resultBuffer.toString();
