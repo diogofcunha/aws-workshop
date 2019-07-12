@@ -1,18 +1,13 @@
-import Koa from "koa";
-import cors from "@koa/cors";
+import Koa from 'koa'
+import cors from '@koa/cors'
+import assetApi from './asset-api'
 
-import spawnBuffered from "./utils/spawnBuffered";
+const app = new Koa()
 
-const app = new Koa();
+app.use(cors()).use(assetApi.routes())
 
-app.use(cors()).use(async ctx => {
-  const resultBuffer = await spawnBuffered("ffmpeg", ["-version"]);
+app.listen(5000)
 
-  ctx.body = resultBuffer.toString();
-});
+console.log('Listening at port 5000')
 
-app.listen(5000);
-
-console.log("Listening at port 5000");
-
-export default app;
+export default app
