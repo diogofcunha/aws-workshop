@@ -25,3 +25,55 @@ resource "aws_s3_bucket_notification" "bucket_notification" {
     events    = ["s3:ObjectCreated:*"]
   }
 }
+
+resource "aws_sqs_queue" "thumbnail_queue" {
+  name                      = "thumbnail-queue"
+  delay_seconds             = 90
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+
+  tags = {
+    Environment = "dev"
+  }
+}
+
+resource "aws_sqs_queue_policy" "thumbnail_queue_policy" {
+  queue_url = "${aws_sqs_queue.thumbnail_queue.id}"
+
+  policy = <<JSON
+    {
+      "Version": "2012-10-17",
+      "Statement": [
+        {
+          "Effect": "Allow",
+          "Principal": {"AWS":"*"},
+          "Action": "sqs:SendMessage",
+          "Resource": "${aws_sqs_queue.thumbnail_queue.arn}",
+          "Condition": {
+            "ArnEquals": {
+              "aws:SourceArn": "${aws_sns_topic.bucket_event_topic.arn}"
+            }
+          }
+        },
+        {
+          "Effect": "Allow",
+          "Principal": {"AWS":"*"},
+          "Action": [
+            "sqs:GetQueueAttributes",
+            "sqs:GetQueueUrl",
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage"
+          ],
+          "Resource": "${aws_sqs_queue.thumbnail_queue.arn}"
+        }
+      ]
+    }
+    JSON
+}
+
+resource "aws_sns_topic_subscription" "thumbails_sqs_target" {
+  topic_arn = "${aws_sns_topic.bucket_event_topic.arn}"
+  protocol  = "sqs"
+  endpoint  = "${aws_sqs_queue.thumbnail_queue.arn}"
+}
