@@ -45,17 +45,19 @@ export const getImages = async () => {
 }
 
 export const getAssetInfo = async id => {
-  if (id === 1) {
-    return {
-      addedAt: Date.now(),
-      durationInSeconds: 0,
-      orientation: 1,
-      mimeType: 'image/jpeg',
-      AssetId: '1',
-      width: 1080,
-      height: 1920
-    }
-  } else {
+  const res = await fetch(`${process.env.REACT_APP_API_ORIGIN}/info/${id}`, {
+    method: 'GET'
+  })
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch info')
+  }
+
+  const info = await res.json()
+
+  if (!info || Object.keys(info).length === 0) {
     throw new Error('Not found')
   }
+
+  return info
 }
