@@ -1,5 +1,6 @@
 import Router from 'koa-router'
 import { S3 } from 'aws-sdk'
+import { isInvalidContentType } from '../utils/validation'
 
 const router = new Router()
 const s3 = new S3({ region: process.env.AWS_REGION })
@@ -34,6 +35,36 @@ router.get('/', async ctx => {
   )
 
   ctx.body = assets
+})
+
+const getPresignedPost = contentType => {
+  return new Promise((resolve, reject) => {
+    s3.createPresignedPost(
+      {
+        Bucket: process.env.AWS_ASSET_BUCKET_NAME,
+        Fields: { key: String(Date.now()) },
+        Conditions: [{ 'Content-Type': contentType }],
+        Expires: 3000
+      },
+      (error, data) => {
+        if (error) {
+          reject(error)
+        } else {
+          resolve(data)
+        }
+      }
+    )
+  })
+}
+
+router.post('/upload', async ctx => {
+  const contentType = ctx.query['content-type']
+
+  if (isInvalidContentType(contentType)) {
+    ctx.throw(400, 'Please supply a valid content type')
+  }
+
+  ctx.body = await getPresignedPost(contentType)
 })
 
 export default router
