@@ -128,3 +128,9 @@ resource "aws_sqs_queue_policy" "asset_info_queue_policy" {
     }
     JSON
 }
+
+resource "aws_sns_topic_subscription" "asset_info_sqs_target" {
+  topic_arn = "${aws_sns_topic.bucket_event_topic.arn}"
+  protocol  = "sqs"
+  endpoint  = "${aws_sqs_queue.asset_info_queue.arn}"
+}
