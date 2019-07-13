@@ -1,9 +1,13 @@
 import Router from 'koa-router'
-import { S3 } from 'aws-sdk'
+import { S3, DynamoDB } from 'aws-sdk'
 import { isInvalidContentType } from '../utils/validation'
 
 const router = new Router()
 const s3 = new S3({ region: process.env.AWS_REGION })
+
+const dynamoClient = new DynamoDB.DocumentClient({
+  region: process.env.AWS_REGION
+})
 
 router.get('/', async ctx => {
   const { Contents } = await s3
@@ -65,6 +69,23 @@ router.post('/upload', async ctx => {
   }
 
   ctx.body = await getPresignedPost(contentType)
+})
+
+router.get('/info/:id', async ctx => {
+  const { id } = ctx.params
+
+  if (!id || Number.isNaN(Number(id))) {
+    ctx.throw(400)
+  }
+
+  const assetInfo = await dynamoClient
+    .get({
+      TableName: 'AssetInfo',
+      Key: { AssetId: id }
+    })
+    .promise()
+
+  ctx.body = assetInfo.Item
 })
 
 export default router
