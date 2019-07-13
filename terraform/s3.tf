@@ -33,3 +33,13 @@ resource "aws_s3_bucket" "asset_thumbnails_bucket" {
     Environment = "Dev"
   }
 }
+
+resource "aws_s3_bucket" "bucket_bundles" {
+  bucket = "diogo.bundles"
+  acl    = "private"
+
+  tags = {
+    Name        = "Bundles"
+    Environment = "Dev"
+  }
+}
