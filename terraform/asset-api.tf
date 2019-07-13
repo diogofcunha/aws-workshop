@@ -74,6 +74,13 @@ resource "aws_iam_policy" "asset_api_policy" {
       ],
       "Effect": "Allow",
       "Resource": ["${aws_s3_bucket.asset_bucket.arn}/*"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem"
+      ],
+      "Resource": ["${aws_dynamodb_table.asset_info_table.arn}"]
     }
   ]
 }
