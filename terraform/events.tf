@@ -134,3 +134,8 @@ resource "aws_sns_topic_subscription" "asset_info_sqs_target" {
   protocol  = "sqs"
   endpoint  = "${aws_sqs_queue.asset_info_queue.arn}"
 }
+
+resource "aws_lambda_event_source_mapping" "asset_info_source_mapping" {
+  event_source_arn = "${aws_sqs_queue.asset_info_queue.arn}"
+  function_name    = "${aws_lambda_function.asset_info.arn}"
+}

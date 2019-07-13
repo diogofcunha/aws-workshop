@@ -81,6 +81,15 @@ resource "aws_iam_policy" "asset_info_lambda_iam_policy" {
         "dynamodb:PutItem"
       ],
       "Resource": ["${aws_dynamodb_table.asset_info_table.arn}"]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": ["${aws_sqs_queue.asset_info_queue.arn}"]
     }
   ],
   "Version": "2012-10-17"
