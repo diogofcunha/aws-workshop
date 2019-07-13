@@ -77,3 +77,8 @@ resource "aws_sns_topic_subscription" "thumbails_sqs_target" {
   protocol  = "sqs"
   endpoint  = "${aws_sqs_queue.thumbnail_queue.arn}"
 }
+
+resource "aws_lambda_event_source_mapping" "create_thumbnail" {
+  event_source_arn = "${aws_sqs_queue.thumbnail_queue.arn}"
+  function_name    = "${aws_lambda_function.thumbnail.arn}"
+}
