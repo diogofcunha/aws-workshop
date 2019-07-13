@@ -19,3 +19,10 @@ resource "aws_iam_policy" "lambda_logging" {
 }
 EOF
 }
+
+resource "aws_lambda_layer_version" "ffmpeg_lambda_layer" {
+  layer_name          = "ffmpeg_lambda_layer"
+  s3_bucket           = "${aws_s3_bucket.bucket_bundles.bucket}"
+  s3_key              = "ffmpeg-bundle"
+  compatible_runtimes = ["nodejs8.10", "nodejs10.x"]
+}
